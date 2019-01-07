@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.aigoucai.lottery.checkaar">
+
+    <application
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity-alias
+            android:name="com.zzcActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/logo_zzc"
+            android:label="@string/zzc"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name="com.zxcActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/zxc"
+            android:label="@string/zxc"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name="com.xpjActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/logo_xpj"
+            android:label="@string/xpj"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name="com.ttActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/tt_logo"
+            android:label="@string/tt"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name="com.pandaActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/panda"
+            android:label="@string/panda"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name="com.k7Activity"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/k7logo"
+            android:label="@string/K7"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name="com.egoActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ego"
+            android:label="@string/ego"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name="com.8HaoActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/logo_8hao"
+            android:label="@string/cp8hao"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name="com.678yuleActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/logo_678"
+            android:label="@string/yule678"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name="com.500CPActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/icon500"
+            android:label="@string/cp500"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name="com.AigoucaiActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/aigoucai"
+            android:label="@string/aigoucai"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+
+    </application>
+
+</manifest>
