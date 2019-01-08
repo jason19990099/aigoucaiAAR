@@ -250,9 +250,6 @@ public class SelectLinesActivity extends Activity implements SwipeRefreshLayout.
                     }else{
                         IntentUtil.gotoActivity(SelectLinesActivity.this, MainWebviewNormalActivity.class, bundleTab, false);
                     }
-
-
-
                 }
             });
 
@@ -432,6 +429,9 @@ public class SelectLinesActivity extends Activity implements SwipeRefreshLayout.
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void eventBusReceive(DataSynevent dataSynevent) {
         LogUtil.e("====SELECactivity==接收到eventbus传递过来的数据========");
+        if (!dataSynevent.getType().equals(Basedata.appid)){
+            return;
+        }
         long2 = System.currentTimeMillis();
         long3 = String.valueOf((long2 - long1)) + "ms";
 

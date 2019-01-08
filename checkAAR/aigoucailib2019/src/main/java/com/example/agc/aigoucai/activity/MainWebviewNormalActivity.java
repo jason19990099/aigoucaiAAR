@@ -419,13 +419,7 @@ public class MainWebviewNormalActivity extends AppCompatActivity {
                     initWebSetting(changeUrl);
                 }
             }
-
-
-
-
         }
-
-
 
     private class AppCacheWebChromeClient extends WebChromeClient {
 

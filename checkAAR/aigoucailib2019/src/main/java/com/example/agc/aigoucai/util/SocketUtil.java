@@ -2,6 +2,8 @@ package com.example.agc.aigoucai.util;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.example.agc.aigoucai.bean.Basedata;
 import com.example.agc.aigoucai.bean.DataSynevent;
 import com.example.agc.aigoucai.bean.GetUrlDatas;
 import com.xuhao.android.libsocket.sdk.ConnectionInfo;
@@ -132,6 +134,7 @@ public class SocketUtil {
                     }
                     DataSynevent dataSynevent = new DataSynevent();
                     dataSynevent.setList(list);
+                    dataSynevent.setType(Basedata.appid);
                     //发送粘性事件
                     EventBus.getDefault().postSticky(dataSynevent);
                 } catch (Exception e) {
