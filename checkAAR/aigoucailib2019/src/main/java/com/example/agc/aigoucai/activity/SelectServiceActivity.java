@@ -1,9 +1,12 @@
 package com.example.agc.aigoucai.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,6 +17,8 @@ import com.example.agc.aigoucai.bean.Basedata;
 import com.example.agc.aigoucai.bean.ChatBean;
 import com.example.agc.aigoucai.util.Apputil;
 import com.example.agc.aigoucai.util.LogUtil;
+import com.example.agc.aigoucai.util.SB;
+import com.example.agc.aigoucai.util.SharePreferencesUtil;
 import com.example.agc.aigoucai.util.ShareUtil;
 import com.example.agc.aigoucai.util.TrustAllCerts;
 import com.google.gson.Gson;
@@ -47,6 +52,8 @@ public class SelectServiceActivity extends Activity {
     FrameLayout flLayout;
     @BindView(R2.id.tv_vertion)
     TextView tvVertion;
+    @BindView(R2.id.iv_background)
+    ImageView ivBackground;
     private Gson gson = new Gson();
     private ChatAdapter chatAdapter;
     private ListView listvie_id;
@@ -56,6 +63,43 @@ public class SelectServiceActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selectservice);
         ButterKnife.bind(this);
+
+
+        String getintent = SharePreferencesUtil.getString(SelectServiceActivity.this, "getIntent", "");
+        if (getintent.contains("com.500CPActivity")) {
+            ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.backgroud_500cp));
+        }
+        if (getintent.contains("com.AigoucaiActivity")) {
+            ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_aigoucai));
+        }
+        if (getintent.contains("com.k7Activity")) {
+            ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_k7));
+        }
+        if (getintent.contains("com.ttActivity")) {
+            ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_tt));
+        }
+        if (getintent.contains("com.678yuleActivity")) {
+            ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_678));
+        }
+        if (getintent.contains("com.xpjActivity")) {
+            ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_xpj));
+        }
+        if (getintent.contains("com.zzcActivity")) {
+            ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_zzc));
+        }
+        if (getintent.contains("com.egoActivity")) {
+            ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_egouwangtou));
+        }
+        if (getintent.contains("com.zxcActivity")) {
+            ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_axc));
+        }
+        if (getintent.contains("com.8HaoActivity")) {
+            ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_8hao));
+        }
+        if (getintent.contains("com.pandaActivity")) {
+            ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_panda));
+        }
+
         tvVertion.setText("版本号:" + Apputil.getVersion(SelectServiceActivity.this));
         listvie_id = findViewById(R.id.listvie_id);
         List<ChatBean> userList2 = ShareUtil.getUser(SelectServiceActivity.this, "duixiang", "userList");
@@ -93,7 +137,7 @@ public class SelectServiceActivity extends Activity {
                                 }
                             })
                             .build();
-                    LogUtil.e("=======appid======"+Basedata.appid );
+                    LogUtil.e("=======appid======" + Basedata.appid);
                     String url = "https://appv1.whsurpass.com/appinfo/contact/" + Basedata.appid + "?date=" + createdate;
                     Request request = new Request.Builder()
                             .url(url)//请求接口。如果需要传参拼接到接口后面。
@@ -107,7 +151,8 @@ public class SelectServiceActivity extends Activity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                List<ChatBean> userList = gson.fromJson(s, new TypeToken<List<ChatBean>>() {}.getType());
+                                List<ChatBean> userList = gson.fromJson(s, new TypeToken<List<ChatBean>>() {
+                                }.getType());
                                 try {
                                     ShareUtil.saveUser(SelectServiceActivity.this, "duixiang", "userList", (ArrayList<ChatBean>) userList);
                                 } catch (Exception e) {
@@ -135,6 +180,13 @@ public class SelectServiceActivity extends Activity {
         Basedata.ifgetService = false;
     }
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -151,5 +203,15 @@ public class SelectServiceActivity extends Activity {
             e.printStackTrace();
         }
         return ssfFactory;
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+           startActivity(new Intent(this,SelectLinesActivity.class));
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

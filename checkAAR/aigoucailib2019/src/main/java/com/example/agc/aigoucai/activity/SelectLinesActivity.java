@@ -2,11 +2,8 @@ package com.example.agc.aigoucai.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -207,10 +204,9 @@ public class SelectLinesActivity extends Activity implements SwipeRefreshLayout.
 
     @OnClick(R2.id.be_selectservice)
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R2.id.be_selectservice:
-                startActivity(new Intent(SelectLinesActivity.this, SelectServiceActivity.class));
-                break;
+        int id=view.getId();
+        if (id==R.id.be_selectservice){
+            startActivity(new Intent(SelectLinesActivity.this, SelectServiceActivity.class));
         }
     }
 
@@ -249,7 +245,14 @@ public class SelectLinesActivity extends Activity implements SwipeRefreshLayout.
                     Bundle bundleTab = new Bundle();
                     bundleTab.putString("url", url_array[i]);
                     SharePreferencesUtil.addString(SelectLinesActivity.this, "main_url", url_array[i]);
-                    IntentUtil.gotoActivity(SelectLinesActivity.this, MainWebviewActivity.class, bundleTab, false);
+                    String getintent = SharePreferencesUtil.getString(SelectLinesActivity.this, "getIntent", "");
+                    if (getintent.contains("com.pandaActivity")) {
+                        IntentUtil.gotoActivity(SelectLinesActivity.this, MainWebviewPandaActivity.class, bundleTab, false);
+                    }else{
+                        IntentUtil.gotoActivity(SelectLinesActivity.this, MainWebviewActivity.class, bundleTab, false);
+                    }
+
+
 
                 }
             });

@@ -17,9 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.agc.aigoucai.R;
-import com.example.agc.aigoucai.activity.MainWebviewActivity;
+import com.example.agc.aigoucai.activity.MainWebviewPandaActivity;
 import com.example.agc.aigoucai.bean.ChatBean;
-import com.example.agc.aigoucai.util.LogUtil;
 
 import java.util.List;
 
@@ -134,7 +133,7 @@ public class ChatAdapter extends BaseAdapter {
                         Bundle bundleTab = new Bundle();
                         bundleTab.putString("url", userList.get(position).getValue());
                         Intent intent = new Intent();
-                        intent.setClass(context, MainWebviewActivity.class);
+                        intent.setClass(context, MainWebviewPandaActivity.class);
                         intent.putExtras(bundleTab);
                         context.startActivity(intent);
                     }

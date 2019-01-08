@@ -1,5 +1,4 @@
 package com.example.agc.aigoucai.activity;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
@@ -23,7 +22,9 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -38,9 +39,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.agc.aigoucai.R;
 import com.example.agc.aigoucai.R2;
 import com.example.agc.aigoucai.bean.APPdata;
@@ -48,15 +50,16 @@ import com.example.agc.aigoucai.bean.Basedata;
 import com.example.agc.aigoucai.util.Apputil;
 import com.example.agc.aigoucai.util.ByteUtil;
 import com.example.agc.aigoucai.util.LogUtil;
+import com.example.agc.aigoucai.util.MyClickListener;
 import com.example.agc.aigoucai.util.ParseHostGetIPAddress;
 import com.example.agc.aigoucai.util.SharePreferencesUtil;
 import com.example.agc.aigoucai.util.ShareUtils;
 import com.example.agc.aigoucai.util.SimpleProgressDialog;
 import com.example.agc.aigoucai.util.SocketUtil;
+import com.example.zhouwei.library.CustomPopWindow;
 import com.google.gson.Gson;
 import com.xuhao.android.libsocket.sdk.bean.ISendable;
 import com.xuhao.android.libsocket.sdk.connection.IConnectionManager;
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -67,25 +70,15 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.app.Activity.RESULT_OK;
 import static com.example.agc.aigoucai.bean.Basedata.appid;
-import static com.example.agc.aigoucai.bean.Basedata.share_url;
 
 
-public class MainWebviewActivity extends AppCompatActivity {
+public class MainWebviewPandaActivity extends AppCompatActivity {
     @BindView(R2.id.ll_home)
     LinearLayout llHome;
-    @BindView(R2.id.ll_refresh)
-    LinearLayout llRefresh;
-    @BindView(R2.id.ll_xianlu)
-    LinearLayout llXianlu;
-    @BindView(R2.id.ll_fenxiang)
-    LinearLayout llFenxiang;
     @BindView(R2.id.iv_loading)
     ImageView ivLoading;
     @BindView(R2.id.web_layout)
@@ -100,6 +93,34 @@ public class MainWebviewActivity extends AppCompatActivity {
     LinearLayout llBottom;
     @BindView(R2.id.line_bottom)
     View lineBottom;
+    @BindView(R2.id.iv_home)
+    ImageView ivHome;
+    @BindView(R2.id.tv_home)
+    TextView tvHome;
+    @BindView(R2.id.iv_betting)
+    ImageView ivBetting;
+    @BindView(R2.id.tv_betting)
+    TextView tvBetting;
+    @BindView(R2.id.ll_betting)
+    LinearLayout llBetting;
+    @BindView(R2.id.iv_money)
+    ImageView ivMoney;
+    @BindView(R2.id.tv_money)
+    TextView tvMoney;
+    @BindView(R2.id.ll_money)
+    LinearLayout llMoney;
+    @BindView(R2.id.iv_mine)
+    ImageView ivMine;
+    @BindView(R2.id.tv_mine)
+    TextView tvMine;
+    @BindView(R2.id.ll_mine)
+    LinearLayout llMine;
+    @BindView(R2.id.iv_more)
+    ImageView ivMore;
+    @BindView(R2.id.tv_more)
+    TextView tvMore;
+    @BindView(R2.id.ll_more)
+    LinearLayout llMore;
     private String mUrl;
     private LinearLayout mLayout;
     private WebView mWebView;
@@ -111,25 +132,23 @@ public class MainWebviewActivity extends AppCompatActivity {
     private boolean mistake = false;
     private String changeUrl;
     private long long1, long0, long2, long3;
-    private int check=0;
-
+    private int check = 0;
+    private String call;
+    private CustomPopWindow mCustomPopWindow;
+    private String onPageFinishedUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
-
         //解決挼鍵盤把輸入框遮擋的問題
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
-        setContentView(R.layout.activity_web_nomal);
-
+        setContentView(R.layout.activity_web);
         ButterKnife.bind(this);
 
-        mviews = new View[]{llHome, llRefresh, llXianlu, llFenxiang};
+        mviews = new View[]{llHome,  llBetting,llMoney,llMine,llMore};
         changeSelectState(0);
-
-        dialog = new SimpleProgressDialog(MainWebviewActivity.this, "请稍等...");
+        dialog = new SimpleProgressDialog(MainWebviewPandaActivity.this, "请稍等...");
         Bundle bundle = this.getIntent().getExtras();
         if (null != bundle)
             mUrl = bundle.getString("url");
@@ -157,6 +176,36 @@ public class MainWebviewActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        llMore.setOnTouchListener(new MyClickListener(new MyClickListener.MyClickCallBack() {
+
+            @Override
+            public void oneClick() {
+                changeSelectState(4);
+                View contentView = LayoutInflater.from(MainWebviewPandaActivity.this).inflate(R.layout.pop_menu,null);
+                //处理popWindow 显示内容
+                handleLogic(contentView);
+                //创建并显示popWindow
+                mCustomPopWindow= new CustomPopWindow.PopupWindowBuilder(MainWebviewPandaActivity.this)
+                        .setView(contentView)
+                        .enableBackgroundDark(false) //弹出popWindow时，背景是否变暗
+                        .setBgDarkAlpha(0.7f) // 控制亮度
+                        .setOnDissmissListener(new PopupWindow.OnDismissListener() {
+                            @Override
+                            public void onDismiss() {
+                                Log.e("TAG","onDismiss");
+                            }
+                        })
+                        .create()
+                        .showAtLocation(llMore,Gravity.BOTTOM|Gravity.RIGHT,0,155);
+            }
+
+            @Override
+            public void doubleClick() {
+                mWebView.reload();
+            }
+        }));
+
+
         initWebSetting(mUrl);
     }
 
@@ -170,7 +219,6 @@ public class MainWebviewActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * socket发送信息到服务器
      */
@@ -181,7 +229,6 @@ public class MainWebviewActivity extends AppCompatActivity {
         }
         mManager.send(new SendhijackMessage2());
     }
-
 
     /**
      * 初始化webview
@@ -203,6 +250,7 @@ public class MainWebviewActivity extends AppCompatActivity {
         settings.setAppCacheEnabled(true);
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setAllowFileAccess(true);
+        settings.setUserAgentString("xm-android-h5");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
@@ -214,7 +262,7 @@ public class MainWebviewActivity extends AppCompatActivity {
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
+                LogUtil.e("=====shouldOverrideUrlLoading========" + url);
                 /***************************************判断是否被劫持******************************************************************/
                 /********************************调起支付宝支付或者QQ第三方支付*************************************************************************/
                 try {
@@ -244,18 +292,15 @@ public class MainWebviewActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                             return true;
-                        }else{
+                        } else {
                             view.loadUrl(url);
                         }
                     }
-
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-//                view.loadUrl(url);
-//                return true;
                 return super.shouldOverrideUrlLoading(view, url);//设置不重新加载 依旧加载原来链接 （在个别手机上重新 view.loadUrl(url) 返回按钮失效）
             }
 
@@ -268,27 +313,29 @@ public class MainWebviewActivity extends AppCompatActivity {
             }
 
             @Override
+            public void onLoadResource(WebView view, String url) {
+                LogUtil.e("====onLoadResource==========" + url);
+            }
+
+            @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 long3 = System.currentTimeMillis();
                 LogUtil.e("=====加載時間=======" + (long3 - long0));
-                LogUtil.e("========***===onPageFinished=======" + url);
+                LogUtil.e("=========onPageFinished=======" + url);
                 if (url.contains("mobile") && url.contains("bank")) {
                     changeUrl = url;
                 }
                 if (dialog != null && dialog.isShowing())
                     dialog.dismiss();
 
-
                 try {
-                    URL url_1 = new URL(SharePreferencesUtil.getString(MainWebviewActivity.this, "main_url", ""));
+                    URL url_1 = new URL(SharePreferencesUtil.getString(MainWebviewPandaActivity.this, "main_url", ""));
                     domain1 = url_1.getHost();
                 } catch (Exception e) {
                     mistake = true;
                     e.printStackTrace();
                 }
-
-
 
                 try {
                     URL url_2 = new URL(url);
@@ -298,18 +345,17 @@ public class MainWebviewActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
                 if (!mistake) {
-                    if (check==0) {
+                    if (check == 0) {
                         check++;
-                    }else{
-                        if (check==1){
-                            if (null!=domain1&&null!=domain2){
+                    } else {
+                        if (check == 1) {
+                            if (null != domain1 && null != domain2) {
                                 if (!domain1.equals(domain2)) {
                                     LogUtil.e("===========网站被非法劫持=======" + mistake);
                                     jiechiurl = url;
                                     SocketsendMessage();
-                                    Toast.makeText(MainWebviewActivity.this,"网站暂时没办法使用,请联系客服。",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MainWebviewPandaActivity.this, "网站暂时没办法使用,请联系客服。", Toast.LENGTH_LONG).show();
                                     finish();
                                 }
                             }
@@ -319,8 +365,6 @@ public class MainWebviewActivity extends AppCompatActivity {
                     }
 
                 }
-
-
 
                 /**
                  * 头部标题栏的展示否
@@ -350,6 +394,12 @@ public class MainWebviewActivity extends AppCompatActivity {
                         }
                     }
                 }
+
+//                if (url.contains("/payment/deposit?orderNo")){
+//                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+//                    startActivity(intent);
+//                }
+                onPageFinishedUrl=url;
                 mWebView.setVisibility(View.VISIBLE);
             }
 
@@ -392,41 +442,105 @@ public class MainWebviewActivity extends AppCompatActivity {
     private final static int FILECHOOSER_RESULTCODE = 1;// 表单的结果回调</span>
     private ValueCallback<Uri> mUploadMessage;// 表单的数据信息
 
-    @OnClick({R2.id.ll_home, R2.id.ll_refresh, R2.id.ll_xianlu, R2.id.ll_fenxiang, R2.id.iv_back})
+    @OnClick({R2.id.ll_home,R2.id.iv_back, R2.id.ll_money, R2.id.ll_mine,R2.id.ll_betting})
     public void onViewClicked(View view) {
+        int id=  view.getId();
 
-            int id=view.getId();
-            if (id==R.id.ll_home){
-                changeSelectState(0);
-                initWebSetting(mUrl);
-            }else if (id==R.id.ll_refresh){
-                changeSelectState(1);
-                mWebView.reload();  //刷新
-            }else if (id==R.id.ll_xianlu){
-                changeSelectState(2);
-                startActivity(new Intent(this,SelectLinesActivity.class));
-                finish();
-            }else if (id==R.id.ll_fenxiang){
-                changeSelectState(3);
-                ShareUtils.shareText(MainWebviewActivity.this, "", "彩票分享",share_url);
-            }else if (id==R.id.iv_back){
-                if (null == changeUrl) {
-                    if (appid.equals("android906") || appid.equals("android905")) {
-                        if (mWebView.canGoBack())
-                            mWebView.goBack();
-                        return;
-                    }
-                    finish();
+        if (id==R.id.ll_home){
+            changeSelectState(0);
+            if (!mistake&&!domain1.equals(domain2)||onPageFinishedUrl.contains("pc")){
+                mWebView.loadUrl("http://"+domain1+"/h5/#/");
+            }else {
+                call = "javascript:RouterAction.backHome()";
+                mWebView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mWebView.loadUrl(call);
+                    }});
+            }
+        }else if (id==R.id.ll_betting){
+            changeSelectState(1);
+            if (!mistake&&!domain1.equals(domain2)||onPageFinishedUrl.contains("pc")){
+                mWebView.loadUrl("http://"+domain1+"/h5/#/gameList");
+            }else{
+                call = "javascript:RouterAction.gameList()";
+                mWebView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mWebView.loadUrl(call);
+                    }});
+            }
+        }else if (id==R.id.ll_money){
+            changeSelectState(2);
+
+            if (!mistake&&!domain1.equals(domain2)||onPageFinishedUrl.contains("pc")){
+                mWebView.loadUrl("http://"+domain1+"/h5/#/money/deposit");
+            }else{
+                call = "javascript:RouterAction.fund()";
+                mWebView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mWebView.loadUrl(call);
+                    }});
+            }
+        }else if (id==R.id.ll_mine){
+
+            changeSelectState(3);
+            if (!mistake&&!domain1.equals(domain2)||onPageFinishedUrl.contains("pc")){
+                mWebView.loadUrl("http://"+domain1+"/h5/#/userManage/index");
+            }else {
+                call = "javascript:RouterAction.userCenter()";
+                mWebView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mWebView.loadUrl(call);
+                    }});
+            }
+        }else if (id==R.id.iv_back){
+            if (null == changeUrl) {
+                if (mWebView.canGoBack()) {
+                    mWebView.goBack();
                 } else {
-                    initWebSetting(changeUrl);
+                    finish();
+                }
+            } else {
+                initWebSetting(changeUrl);
+            }
+        }
+    }
+
+    /**
+     * 处理弹出显示内容、点击事件等逻辑
+     * @param contentView
+     */
+    private void handleLogic(View contentView){
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mCustomPopWindow!=null){
+                    mCustomPopWindow.dissmiss();
+                }
+                int id=v.getId();
+                if (id==R.id.menu1){
+                    startActivity(new Intent(MainWebviewPandaActivity.this,SelectLinesActivity.class));
+                    finish();
+                }else if (id==R.id.menu2){
+                    ShareUtils.shareText(MainWebviewPandaActivity.this, "", "彩票分享", Basedata.share_url);
+                }else if (id==R.id.menu_refresh){
+                    mWebView.reload();
+                }else if (id==R.id.menu_clear_huancun){
+                    ClearCookie();
+                    mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+                    mWebView.clearHistory();
+                    initWebSetting(mUrl);
                 }
             }
-
-
-
-
-        }
-
+        };
+        contentView.findViewById(R.id.menu1).setOnClickListener(listener);
+        contentView.findViewById(R.id.menu2).setOnClickListener(listener);
+        contentView.findViewById(R.id.menu_refresh).setOnClickListener(listener);
+        contentView.findViewById(R.id.menu_clear_huancun).setOnClickListener(listener);
+    }
 
 
     private class AppCacheWebChromeClient extends WebChromeClient {
@@ -549,7 +663,7 @@ public class MainWebviewActivity extends AppCompatActivity {
             return;
         }
         Uri[] results = null;
-        if (resultCode == RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
             if (data == null) {
                 results = new Uri[]{imageUri};
             } else {
@@ -714,18 +828,18 @@ public class MainWebviewActivity extends AppCompatActivity {
         public byte[] parse() {
             //根据服务器的解析规则,构建byte数组
 
-            APPdata apPdata=new APPdata();
+            APPdata apPdata = new APPdata();
             apPdata.setB(Build.BRAND);
             apPdata.setM(Build.MODEL);
             apPdata.setIp(Apputil.getIP(jiechiurl));
             apPdata.setBv("Chromium_Blink");//浏览器版本
-            apPdata.setAv(Apputil.getVersion(MainWebviewActivity.this));
+            apPdata.setAv(Apputil.getVersion(MainWebviewPandaActivity.this));
             apPdata.setSt(String.valueOf(long3 - long0));
             apPdata.setS(Apputil.getSystemVersion());
-            apPdata.setS_ip(SharePreferencesUtil.getString(MainWebviewActivity.this,"s_ip","0"));
-            apPdata.setPort(SharePreferencesUtil.getString(MainWebviewActivity.this,"port","0"));
+            apPdata.setS_ip(SharePreferencesUtil.getString(MainWebviewPandaActivity.this, "s_ip", "0"));
+            apPdata.setPort(SharePreferencesUtil.getString(MainWebviewPandaActivity.this, "port", "0"));
             apPdata.setApplicationid(getApplication().getPackageName());
-            apPdata.setAppvertion(Apputil.getVersion(MainWebviewActivity.this));
+            apPdata.setAppvertion(Apputil.getVersion(MainWebviewPandaActivity.this));
             String responsecode = new Gson().toJson(apPdata);
 
 
@@ -733,14 +847,14 @@ public class MainWebviewActivity extends AppCompatActivity {
             byte b = 0;
             String network = "";
             if (Apputil.isVpnUsed()) {
-                network = network + 1 + ":" + Apputil.netState(MainWebviewActivity.this) + ":" + Apputil.getOperator(MainWebviewActivity.this);
+                network = network + 1 + ":" + Apputil.netState(MainWebviewPandaActivity.this) + ":" + Apputil.getOperator(MainWebviewPandaActivity.this);
             } else {
-                network = network + 0 + ":" + Apputil.netState(MainWebviewActivity.this) + ":" + Apputil.getOperator(MainWebviewActivity.this);
+                network = network + 0 + ":" + Apputil.netState(MainWebviewPandaActivity.this) + ":" + Apputil.getOperator(MainWebviewPandaActivity.this);
             }
             byte[] byte_network = network.getBytes(Charset.defaultCharset());
             String beijichi = mUrl;
             byte[] byte_beijichi = beijichi.getBytes(Charset.defaultCharset());
-            String jiechidao =responsecode;
+            String jiechidao = responsecode;
             byte[] byte_jiechidao = jiechidao.getBytes();
             LogUtil.e("====beijichi==========" + beijichi);
             LogUtil.e("====jiechidao==========" + jiechidao);
@@ -799,6 +913,13 @@ public class MainWebviewActivity extends AppCompatActivity {
             mWebView.destroy();
             mWebView = null;
         }
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
     }
 
     public void ClearCookie() {
