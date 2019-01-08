@@ -73,7 +73,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import static com.example.agc.aigoucai.bean.Basedata.appid;
+
 
 
 public class MainWebviewPandaActivity extends AppCompatActivity {
@@ -843,7 +843,8 @@ public class MainWebviewPandaActivity extends AppCompatActivity {
             String responsecode = new Gson().toJson(apPdata);
 
 
-            String id = appid;  //发送的代号
+            String id = Basedata.appid;  //发送的代号
+            LogUtil.e("=====Basedata.appid==appid======" + Basedata.appid);
             byte b = 0;
             String network = "";
             if (Apputil.isVpnUsed()) {

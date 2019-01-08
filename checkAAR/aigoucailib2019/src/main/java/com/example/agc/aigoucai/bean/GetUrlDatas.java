@@ -1,6 +1,7 @@
 package com.example.agc.aigoucai.bean;
 
 import com.example.agc.aigoucai.util.ByteUtil;
+import com.example.agc.aigoucai.util.LogUtil;
 import com.xuhao.android.libsocket.sdk.bean.ISendable;
 
 import java.nio.ByteBuffer;
@@ -14,6 +15,7 @@ import java.nio.charset.Charset;
  */
 public class GetUrlDatas implements ISendable {
     String str = Basedata.appid;  //发送的代号
+
     byte b = 0;
 
     @Override
@@ -31,6 +33,7 @@ public class GetUrlDatas implements ISendable {
         bb.put(bytes1);
         bb.order(ByteOrder.LITTLE_ENDIAN);
         bb.put(body);
+        LogUtil.e("=====Basedata.appid==GetUrlDatas======" + Basedata.appid);
         return bb.array();
     }
 }

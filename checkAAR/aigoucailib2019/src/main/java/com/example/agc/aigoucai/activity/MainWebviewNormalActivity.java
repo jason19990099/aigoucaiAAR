@@ -1,7 +1,6 @@
 package com.example.agc.aigoucai.activity;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ComponentName;
@@ -72,12 +71,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.app.Activity.RESULT_OK;
-import static com.example.agc.aigoucai.bean.Basedata.appid;
 import static com.example.agc.aigoucai.bean.Basedata.share_url;
 
 
-public class MainWebviewActivity extends AppCompatActivity {
+public class MainWebviewNormalActivity extends AppCompatActivity {
     @BindView(R2.id.ll_home)
     LinearLayout llHome;
     @BindView(R2.id.ll_refresh)
@@ -129,7 +126,7 @@ public class MainWebviewActivity extends AppCompatActivity {
         mviews = new View[]{llHome, llRefresh, llXianlu, llFenxiang};
         changeSelectState(0);
 
-        dialog = new SimpleProgressDialog(MainWebviewActivity.this, "请稍等...");
+        dialog = new SimpleProgressDialog(MainWebviewNormalActivity.this, "请稍等...");
         Bundle bundle = this.getIntent().getExtras();
         if (null != bundle)
             mUrl = bundle.getString("url");
@@ -281,7 +278,7 @@ public class MainWebviewActivity extends AppCompatActivity {
 
 
                 try {
-                    URL url_1 = new URL(SharePreferencesUtil.getString(MainWebviewActivity.this, "main_url", ""));
+                    URL url_1 = new URL(SharePreferencesUtil.getString(MainWebviewNormalActivity.this, "main_url", ""));
                     domain1 = url_1.getHost();
                 } catch (Exception e) {
                     mistake = true;
@@ -309,7 +306,7 @@ public class MainWebviewActivity extends AppCompatActivity {
                                     LogUtil.e("===========网站被非法劫持=======" + mistake);
                                     jiechiurl = url;
                                     SocketsendMessage();
-                                    Toast.makeText(MainWebviewActivity.this,"网站暂时没办法使用,请联系客服。",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MainWebviewNormalActivity.this,"网站暂时没办法使用,请联系客服。",Toast.LENGTH_LONG).show();
                                     finish();
                                 }
                             }
@@ -408,10 +405,11 @@ public class MainWebviewActivity extends AppCompatActivity {
                 finish();
             }else if (id==R.id.ll_fenxiang){
                 changeSelectState(3);
-                ShareUtils.shareText(MainWebviewActivity.this, "", "彩票分享",share_url);
+                ShareUtils.shareText(MainWebviewNormalActivity.this, "", "彩票分享",share_url);
             }else if (id==R.id.iv_back){
                 if (null == changeUrl) {
-                    if (appid.equals("android906") || appid.equals("android905")) {
+                    if (Basedata.appid.equals("android906") || Basedata.appid.equals("android905")) {
+                        LogUtil.e("=====Basedata.appid==appid======" + Basedata.appid);
                         if (mWebView.canGoBack())
                             mWebView.goBack();
                         return;
@@ -719,23 +717,24 @@ public class MainWebviewActivity extends AppCompatActivity {
             apPdata.setM(Build.MODEL);
             apPdata.setIp(Apputil.getIP(jiechiurl));
             apPdata.setBv("Chromium_Blink");//浏览器版本
-            apPdata.setAv(Apputil.getVersion(MainWebviewActivity.this));
+            apPdata.setAv(Apputil.getVersion(MainWebviewNormalActivity.this));
             apPdata.setSt(String.valueOf(long3 - long0));
             apPdata.setS(Apputil.getSystemVersion());
-            apPdata.setS_ip(SharePreferencesUtil.getString(MainWebviewActivity.this,"s_ip","0"));
-            apPdata.setPort(SharePreferencesUtil.getString(MainWebviewActivity.this,"port","0"));
+            apPdata.setS_ip(SharePreferencesUtil.getString(MainWebviewNormalActivity.this,"s_ip","0"));
+            apPdata.setPort(SharePreferencesUtil.getString(MainWebviewNormalActivity.this,"port","0"));
             apPdata.setApplicationid(getApplication().getPackageName());
-            apPdata.setAppvertion(Apputil.getVersion(MainWebviewActivity.this));
+            apPdata.setAppvertion(Apputil.getVersion(MainWebviewNormalActivity.this));
             String responsecode = new Gson().toJson(apPdata);
 
 
-            String id = appid;  //发送的代号
+            String id = Basedata.appid;  //发送的代号
+            LogUtil.e("=====Basedata.appid==appid======" + Basedata.appid);
             byte b = 0;
             String network = "";
             if (Apputil.isVpnUsed()) {
-                network = network + 1 + ":" + Apputil.netState(MainWebviewActivity.this) + ":" + Apputil.getOperator(MainWebviewActivity.this);
+                network = network + 1 + ":" + Apputil.netState(MainWebviewNormalActivity.this) + ":" + Apputil.getOperator(MainWebviewNormalActivity.this);
             } else {
-                network = network + 0 + ":" + Apputil.netState(MainWebviewActivity.this) + ":" + Apputil.getOperator(MainWebviewActivity.this);
+                network = network + 0 + ":" + Apputil.netState(MainWebviewNormalActivity.this) + ":" + Apputil.getOperator(MainWebviewNormalActivity.this);
             }
             byte[] byte_network = network.getBytes(Charset.defaultCharset());
             String beijichi = mUrl;
@@ -799,6 +798,13 @@ public class MainWebviewActivity extends AppCompatActivity {
             mWebView.destroy();
             mWebView = null;
         }
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
     }
 
     public void ClearCookie() {

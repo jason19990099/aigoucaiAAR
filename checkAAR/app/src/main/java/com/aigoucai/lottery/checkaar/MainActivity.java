@@ -7,6 +7,9 @@ import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
 import com.example.agc.aigoucai.activity.SplashActivity;
 import com.example.agc.aigoucai.bean.Aardata;
 import com.example.agc.aigoucai.bean.Basedata;
@@ -31,10 +34,14 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     private List<Appdata.Appdatas> datas =new ArrayList<>();
+    ImageView iv_imgs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        iv_imgs=findViewById(R.id.iv_imgs);
+//        iv_imgs.getBackground().setAlpha(250);
         getChatdata();
     }
 
@@ -82,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             List list_key=new ArrayList();
 
+                            //显示桌面图标
                             if (extend_1_titleArray.length==extend_1_urlArray.length){
                                 for (int m=0;m<extend_1_titleArray.length;m++){
                                     Appdata.Appdatas  appdatas=new Appdata.Appdatas();
@@ -91,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
                                     list_key.add(extend_1_titleArray[m]);
                                 }
                             }
-
                             changIcoinUtils.addmore(MainActivity.this,list_key);
 
 
@@ -107,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
                             Log.e ("ActivityLabel=====", activityInfo.loadLabel (pm).toString ());
                             Log.e("getIntent()======",getIntent().getComponent().getClassName());
                             SharePreferencesUtil.addString(MainActivity.this,"getIntent",getIntent().getComponent().getClassName());
-                            LogUtil.e("=========122====="+datas.get(0).getExtend_1_url());
                             for (int i = 0; i< datas.size(); i++){
                                 if (getIntent().getComponent().getClassName().contains(datas.get(i).getExtend_1_title())){
                                     Basedata.appid= datas.get(i).getExtend_1_url();
@@ -119,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
                                 //解析地址
                                 String app_url=aardata.getData().getApp_url();
                                 String[] sourceStrArray = app_url.split(",");
-                                LogUtil.e("======sourceStrArray===="+sourceStrArray.length);
                                 List list=new ArrayList();
                                 for (int i = 0; i < sourceStrArray.length; i++) {
                                     list.add(sourceStrArray[i]);
@@ -132,10 +137,12 @@ public class MainActivity extends AppCompatActivity {
 
                         }else{
                             //do nothing
+                            //做马甲包的跳转
                         }
 
                     }else{
-                             //do nothing
+                        //do nothing
+                        //做马甲包的跳转
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -144,8 +151,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
-
-
     }
 
 

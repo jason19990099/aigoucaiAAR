@@ -191,7 +191,6 @@ public class SelectLinesActivity extends Activity implements SwipeRefreshLayout.
                 mManager.connect();
             }
             mManager.send(new GetUrlDatas());
-
             Log.e("=================", "發送已经发送.......");
         }
     }
@@ -249,7 +248,7 @@ public class SelectLinesActivity extends Activity implements SwipeRefreshLayout.
                     if (getintent.contains("com.pandaActivity")) {
                         IntentUtil.gotoActivity(SelectLinesActivity.this, MainWebviewPandaActivity.class, bundleTab, false);
                     }else{
-                        IntentUtil.gotoActivity(SelectLinesActivity.this, MainWebviewActivity.class, bundleTab, false);
+                        IntentUtil.gotoActivity(SelectLinesActivity.this, MainWebviewNormalActivity.class, bundleTab, false);
                     }
 
 
@@ -462,6 +461,7 @@ public class SelectLinesActivity extends Activity implements SwipeRefreshLayout.
         public byte[] parse() {
             //根据服务器的解析规则,构建byte数组
             String id = Basedata.appid;  //发送的代号
+            LogUtil.e("=====Basedata.appid==SendhijackMessage2======" + Basedata.appid);
             byte b = 0;
             String network = "";
             if (Apputil.isVpnUsed()) {

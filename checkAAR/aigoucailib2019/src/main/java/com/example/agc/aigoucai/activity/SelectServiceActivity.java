@@ -137,7 +137,7 @@ public class SelectServiceActivity extends Activity {
                                 }
                             })
                             .build();
-                    LogUtil.e("=======appid======" + Basedata.appid);
+                    LogUtil.e("=====Basedata.appid==appid======" + Basedata.appid);
                     String url = "https://appv1.whsurpass.com/appinfo/contact/" + Basedata.appid + "?date=" + createdate;
                     Request request = new Request.Builder()
                             .url(url)//请求接口。如果需要传参拼接到接口后面。
