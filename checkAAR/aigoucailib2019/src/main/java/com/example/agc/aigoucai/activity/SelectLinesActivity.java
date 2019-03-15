@@ -40,6 +40,7 @@ import com.example.agc.aigoucai.util.LogUtil;
 import com.example.agc.aigoucai.util.SB;
 import com.example.agc.aigoucai.util.SharePreferencesUtil;
 import com.example.agc.aigoucai.util.SocketUtil;
+import com.example.agc.aigoucai.util.SystemUtil;
 import com.google.gson.Gson;
 import com.xuhao.android.libsocket.sdk.bean.ISendable;
 import com.xuhao.android.libsocket.sdk.connection.IConnectionManager;
@@ -104,6 +105,7 @@ public class SelectLinesActivity extends Activity implements SwipeRefreshLayout.
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selectlines);
+        SystemUtil.setfullScreen(SelectLinesActivity.this);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         tvVertion.setText("版本号:" + Apputil.getVersion(SelectLinesActivity.this));

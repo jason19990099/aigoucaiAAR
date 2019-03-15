@@ -8,7 +8,11 @@ buildscript {
         mavenCentral()
 
     }
+
+
     dependencies {
+        //这里需要使用3.0.1 ，gradle-wrapper-gradle-wrapper.properties 里面的配置
+        //distributionUrl=https\://services.gradle.org/distributions/gradle-4.1-all.zip
         classpath 'com.android.tools.build:gradle:3.0.1'
         //butterknife的导入
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.5.1'

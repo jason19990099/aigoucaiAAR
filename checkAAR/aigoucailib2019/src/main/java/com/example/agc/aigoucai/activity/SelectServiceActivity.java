@@ -20,6 +20,7 @@ import com.example.agc.aigoucai.util.LogUtil;
 import com.example.agc.aigoucai.util.SB;
 import com.example.agc.aigoucai.util.SharePreferencesUtil;
 import com.example.agc.aigoucai.util.ShareUtil;
+import com.example.agc.aigoucai.util.SystemUtil;
 import com.example.agc.aigoucai.util.TrustAllCerts;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -63,7 +64,7 @@ public class SelectServiceActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selectservice);
         ButterKnife.bind(this);
-
+        SystemUtil.setfullScreen(SelectServiceActivity.this);
 
         String getintent = SharePreferencesUtil.getString(SelectServiceActivity.this, "getIntent", "");
         if (getintent.contains("com.500CPActivity")) {

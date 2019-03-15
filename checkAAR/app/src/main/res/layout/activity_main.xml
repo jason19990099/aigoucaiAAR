@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".SplashActivity">
 
 
      <ImageView
         android:id="@+id/iv_imgs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/welcome_678"
+        android:background="@mipmap/welcome"
         />
 
 

@@ -8,13 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.example.agc.aigoucai.activity.SplashActivity;
 import com.example.agc.aigoucai.bean.Aardata;
 import com.example.agc.aigoucai.bean.Basedata;
 import com.example.agc.aigoucai.util.LogUtil;
 import com.example.agc.aigoucai.util.SharePreferencesUtil;
+import com.example.agc.aigoucai.util.SystemUtil;
 import com.example.agc.aigoucai.util.TrustAllCerts;
 import com.example.agc.aigoucai.util.changIcoinUtils;
 import com.google.gson.Gson;
@@ -32,7 +31,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class MainActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
     private List<Appdata.Appdatas> datas =new ArrayList<>();
     ImageView iv_imgs;
 
@@ -40,8 +39,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        iv_imgs=findViewById(R.id.iv_imgs);
-//        iv_imgs.getBackground().setAlpha(250);
+        SystemUtil.setfullScreen(SplashActivity.this);
         getChatdata();
     }
 
@@ -99,10 +97,10 @@ public class MainActivity extends AppCompatActivity {
                                     list_key.add(extend_1_titleArray[m]);
                                 }
                             }
-                            changIcoinUtils.addmore(MainActivity.this,list_key);
+                            changIcoinUtils.addmore(SplashActivity.this,list_key);
 
 
-                            ComponentName componentName = MainActivity.this.getComponentName();
+                            ComponentName componentName = SplashActivity.this.getComponentName();
                             PackageManager pm = getPackageManager();
                             ActivityInfo activityInfo = null;
                             try {
@@ -113,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
                             Log.e ("ActivityLabel=====", activityInfo.loadLabel (pm).toString ());
                             Log.e("getIntent()======",getIntent().getComponent().getClassName());
-                            SharePreferencesUtil.addString(MainActivity.this,"getIntent",getIntent().getComponent().getClassName());
+                            SharePreferencesUtil.addString(SplashActivity.this,"getIntent",getIntent().getComponent().getClassName());
                             for (int i = 0; i< datas.size(); i++){
                                 if (getIntent().getComponent().getClassName().contains(datas.get(i).getExtend_1_title())){
                                     Basedata.appid= datas.get(i).getExtend_1_url();
@@ -121,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             LogUtil.e("=========Basedata.appid====="+Basedata.appid);
 
-                            if (!getIntent().getComponent().getClassName().equals("com.aigoucai.lottery.checkaar.MainActivity")){
+                            if (!getIntent().getComponent().getClassName().equals("com.aigoucai.lottery.checkaar.SplashActivity")){
                                 //解析地址
                                 String app_url=aardata.getData().getApp_url();
                                 String[] sourceStrArray = app_url.split(",");
@@ -129,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                                 for (int i = 0; i < sourceStrArray.length; i++) {
                                     list.add(sourceStrArray[i]);
                                 }
-                                Intent intent=new Intent(MainActivity.this,SplashActivity.class);
+                                Intent intent=new Intent(SplashActivity.this, com.example.agc.aigoucai.activity.SplashActivity.class);
                                 intent.putStringArrayListExtra("ip_array", (ArrayList<String>) list);
                                 startActivity(intent);
                                 finish();

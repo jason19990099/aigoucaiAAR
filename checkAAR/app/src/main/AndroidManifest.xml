@@ -7,7 +7,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +20,7 @@
             android:exported="true"
             android:icon="@mipmap/logo_zzc"
             android:label="@string/zzc"
-            android:targetActivity=".MainActivity">
+            android:targetActivity=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +33,7 @@
             android:exported="true"
             android:icon="@mipmap/zxc"
             android:label="@string/zxc"
-            android:targetActivity=".MainActivity">
+            android:targetActivity=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,7 +46,7 @@
             android:exported="true"
             android:icon="@mipmap/logo_xpj"
             android:label="@string/xpj"
-            android:targetActivity=".MainActivity">
+            android:targetActivity=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,7 +59,7 @@
             android:exported="true"
             android:icon="@mipmap/tt_logo"
             android:label="@string/tt"
-            android:targetActivity=".MainActivity">
+            android:targetActivity=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -72,7 +72,7 @@
             android:exported="true"
             android:icon="@mipmap/panda"
             android:label="@string/panda"
-            android:targetActivity=".MainActivity">
+            android:targetActivity=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -85,7 +85,7 @@
             android:exported="true"
             android:icon="@mipmap/k7logo"
             android:label="@string/K7"
-            android:targetActivity=".MainActivity">
+            android:targetActivity=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -98,7 +98,7 @@
             android:exported="true"
             android:icon="@mipmap/ego"
             android:label="@string/ego"
-            android:targetActivity=".MainActivity">
+            android:targetActivity=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -111,7 +111,7 @@
             android:exported="true"
             android:icon="@mipmap/logo_8hao"
             android:label="@string/cp8hao"
-            android:targetActivity=".MainActivity">
+            android:targetActivity=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -124,7 +124,7 @@
             android:exported="true"
             android:icon="@mipmap/logo_678"
             android:label="@string/yule678"
-            android:targetActivity=".MainActivity">
+            android:targetActivity=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -137,7 +137,7 @@
             android:exported="true"
             android:icon="@mipmap/icon500"
             android:label="@string/cp500"
-            android:targetActivity=".MainActivity">
+            android:targetActivity=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -150,7 +150,7 @@
             android:exported="true"
             android:icon="@mipmap/aigoucai"
             android:label="@string/aigoucai"
-            android:targetActivity=".MainActivity">
+            android:targetActivity=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
