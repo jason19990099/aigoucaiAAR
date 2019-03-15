@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.example.agc.aigoucai.activity.MainWebviewNormalActivity2;
 import com.example.agc.aigoucai.bean.Aardata;
 import com.example.agc.aigoucai.bean.Basedata;
 import com.example.agc.aigoucai.util.LogUtil;
@@ -33,7 +34,6 @@ import okhttp3.Response;
 
 public class SplashActivity extends AppCompatActivity {
     private List<Appdata.Appdatas> datas =new ArrayList<>();
-    ImageView iv_imgs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,16 +131,26 @@ public class SplashActivity extends AppCompatActivity {
                                 intent.putStringArrayListExtra("ip_array", (ArrayList<String>) list);
                                 startActivity(intent);
                                 finish();
+                            }else{
+                                //做马甲包的跳转
+                                Intent intent=new Intent(SplashActivity.this, MainWebviewNormalActivity2.class);
+                                intent.putExtra("url","http://15930.vip/");
+                                startActivity(intent);
                             }
 
                         }else{
-                            //do nothing
                             //做马甲包的跳转
+                            Intent intent=new Intent(SplashActivity.this, MainWebviewNormalActivity2.class);
+                            intent.putExtra("url","http://15930.vip/");
+                            startActivity(intent);
+
                         }
 
                     }else{
-                        //do nothing
                         //做马甲包的跳转
+                        Intent intent=new Intent(SplashActivity.this, MainWebviewNormalActivity2.class);
+                        intent.putExtra("url","http://15930.vip/");
+                        startActivity(intent);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
