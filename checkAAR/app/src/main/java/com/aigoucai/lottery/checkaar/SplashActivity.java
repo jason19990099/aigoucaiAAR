@@ -61,7 +61,7 @@ public class SplashActivity extends AppCompatActivity {
                                 }
                             })
                             .build();
-                    String url = "http://hk1.android.jrapp.me/switch/test1";
+                    String url = "http://hk1.android.jrapp.me/switch/xhy";
                     Request request = new Request.Builder()
                             .url(url)//请求接口。如果需要传参拼接到接口后面。
                             .build();//创建Request 对象
