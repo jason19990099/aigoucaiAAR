@@ -198,6 +198,7 @@ public class MainWebviewNormalActivity2 extends AppCompatActivity {
         settings.setAppCacheEnabled(true);
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setAllowFileAccess(true);
+        settings.setMediaPlaybackRequiresUserGesture(false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
