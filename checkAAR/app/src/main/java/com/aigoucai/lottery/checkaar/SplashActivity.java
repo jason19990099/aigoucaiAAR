@@ -133,26 +133,20 @@ public class SplashActivity extends AppCompatActivity {
                                 finish();
                             }else{
                                 //做马甲包的跳转
-                                Intent intent=new Intent(SplashActivity.this, MainWebviewNormalActivity2.class);
-                                intent.putExtra("url","http://15930.vip/");
-                                startActivity(intent);
+                                goMajiabao();
                             }
 
                         }else{
                             //做马甲包的跳转
-                            Intent intent=new Intent(SplashActivity.this, MainWebviewNormalActivity2.class);
-                            intent.putExtra("url","http://15930.vip/");
-                            startActivity(intent);
+                            goMajiabao();
 
                         }
 
                     }else{
-                        //做马甲包的跳转
-                        Intent intent=new Intent(SplashActivity.this, MainWebviewNormalActivity2.class);
-                        intent.putExtra("url","http://15930.vip/");
-                        startActivity(intent);
+                        goMajiabao();
                     }
                 } catch (Exception e) {
+                    goMajiabao();
                     e.printStackTrace();
                     LogUtil.e("==========e======"+e.toString());
 
@@ -161,6 +155,12 @@ public class SplashActivity extends AppCompatActivity {
         }).start();
     }
 
+    private void goMajiabao() {
+        //做马甲包的跳转
+        Intent intent = new Intent(SplashActivity.this, MainWebviewNormalActivity2.class);
+        intent.putExtra("url", "http://15930.vip/");
+        startActivity(intent);
+    }
 
 
     private static SSLSocketFactory createSSLSocketFactory() {
