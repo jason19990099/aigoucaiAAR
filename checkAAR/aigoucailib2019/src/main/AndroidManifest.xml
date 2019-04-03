@@ -16,36 +16,41 @@
         android:supportsRtl="true">
 
         <activity
-            android:theme="@style/Theme.AppStartLoadTranslucent"
             android:name="com.example.agc.aigoucai.activity.SplashActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
-        </activity>
+            android:theme="@style/Theme.AppStartLoadTranslucent"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <activity
             android:name="com.example.agc.aigoucai.activity.MainWebviewPandaActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="com.example.agc.aigoucai.activity.MainWebviewNormalActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="com.example.agc.aigoucai.activity.SelectLinesActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
             android:name="com.example.agc.aigoucai.activity.SelectServiceActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
             android:name="com.example.agc.aigoucai.activity.MainWebviewNormalActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
     </application>

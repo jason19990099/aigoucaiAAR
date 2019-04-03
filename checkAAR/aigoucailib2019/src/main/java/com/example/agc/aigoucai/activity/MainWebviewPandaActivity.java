@@ -271,6 +271,7 @@ public class MainWebviewPandaActivity extends AppCompatActivity {
                             || url.startsWith("https://messenger")  //聊天页
                             || url.startsWith("https://www.agcapp.me/app.apk")
                             || url.startsWith("upwrp://")   //银联云闪付
+                            || url.startsWith("weixin://wap/pay")   //微信支付
                             ) {
 
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -314,7 +315,7 @@ public class MainWebviewPandaActivity extends AppCompatActivity {
 
             @Override
             public void onLoadResource(WebView view, String url) {
-                LogUtil.e("====onLoadResource==========" + url);
+//                LogUtil.e("====onLoadResource==========" + url);
             }
 
             @Override

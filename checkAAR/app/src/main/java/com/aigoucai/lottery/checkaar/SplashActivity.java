@@ -18,8 +18,14 @@ import com.example.agc.aigoucai.util.SystemUtil;
 import com.example.agc.aigoucai.util.TrustAllCerts;
 import com.example.agc.aigoucai.util.changIcoinUtils;
 import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.net.ssl.HostnameVerifier;
@@ -27,6 +33,9 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
+
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -34,6 +43,8 @@ import okhttp3.Response;
 
 public class SplashActivity extends AppCompatActivity {
     private List<Appdata.Appdatas> datas =new ArrayList<>();
+     List<String> list= new ArrayList<>();
+    private IParray  iParray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,10 +167,38 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void goMajiabao() {
-        //做马甲包的跳转
-        Intent intent = new Intent(SplashActivity.this, MainWebviewNormalActivity2.class);
-        intent.putExtra("url", "http://15930.vip/");
-        startActivity(intent);
+        String url = "http://api.dd7666.com/index.php?r=index/getapi_ya";
+        OkHttpClient okHttpClient = new OkHttpClient();
+        final Request request = new Request.Builder()
+                .url(url)
+                .get()//默认就是GET请求，可以不写
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("123", "onFailure: ");
+            }
+            @Override
+            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                String s=response.body().string();
+                iParray=new Gson().fromJson(s,IParray.class);
+
+                for (int i=0;i<iParray.getData().size();i++){
+                    list.add(iParray.getData().get(i));
+                }
+                String url="";
+                for (int m=0;m<list.size();m++){
+                    if (!list.get(m).contains("http://")&&!list.get(m).contains("https://")){
+                        url="http://"+list.get(m);
+                    }
+                    sendHttpRequest(url,m);
+                }
+            }
+
+
+        });
+
     }
 
 
@@ -181,6 +220,65 @@ public class SplashActivity extends AppCompatActivity {
         super.onStop();
         //这里要加 控制生命周期
         finish();
+    }
+
+
+
+
+    public SimpleDateFormat dfs = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");//设置日期格式
+    //请求网址响应
+    public void sendHttpRequest(final String address, final int i) {
+        if (null==address){
+            return ;
+        }
+        new Thread(new Runnable() {
+            long between = 0;
+            String date2 = "";
+            public void run() {
+
+                HttpURLConnection connection = null;
+                try {
+                    URL url = new URL(address);
+                    connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
+                    connection.setConnectTimeout(9999);
+                    connection.setReadTimeout(9999);
+                    final String date1 = dfs.format(new Date());// new Date()为获取当前系统时间，也可使用当前时间戳
+                    connection.connect();
+                    int responseCode = connection.getResponseCode();
+                    if (responseCode == 200) {
+                        date2 = dfs.format(new Date());// new Date()为获取当前系统时间，也可使用当前时间戳
+                        Date begin = dfs.parse(date1);
+                        Date end = dfs.parse(date2);
+                        between = Math.abs((end.getTime() - begin.getTime()));// 得到两者的毫秒数
+                        Log.e("between",between+"");
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //做马甲包的跳转
+                                Intent intent = new Intent(SplashActivity.this, MainWebviewNormalActivity2.class);
+                                intent.putExtra("url", address);
+                                startActivity(intent);
+                            }
+                        });
+                    } else {
+                        Log.e("between","失敗了。。。。。。");
+                        //做马甲包的跳转
+                    }
+
+                } catch (Exception e) {
+                    Log.e("between","發生錯誤了。。。。。。"+e.toString());
+                } finally {
+                    if (connection != null) {
+                        connection.disconnect();
+                    }
+
+                }
+            }
+        }).start();
+
+
     }
 
 
