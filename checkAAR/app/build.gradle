@@ -44,7 +44,7 @@ android {
 
     // 打包的渠道
     productFlavors {
-        panda2 {}
+        xiaohuangya {}
     }
 }
 //
