@@ -39,6 +39,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.agc.aigoucai.R;
 import com.example.agc.aigoucai.R2;
+import com.example.agc.aigoucai.util.LogUtil;
+
 import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -108,7 +110,7 @@ public class MainWebviewPandaActivity2 extends AppCompatActivity {
         if (null != bundle)
             mUrl = bundle.getString("url");
         mLayout = findViewById(R.id.web_layout);
-
+        LogUtil.e("======mUrl======"+mUrl);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mWebView = new WebView(this);
         mWebView.setLayoutParams(params);

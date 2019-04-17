@@ -44,7 +44,7 @@
             android:name="com.xpjActivity"
             android:enabled="false"
             android:exported="true"
-            android:icon="@mipmap/logo_xpj"
+            android:icon="@mipmap/logo_xpj_new"
             android:label="@string/xpj"
             android:targetActivity=".SplashActivity">
             <intent-filter>
@@ -57,7 +57,7 @@
             android:name="com.ttActivity"
             android:enabled="false"
             android:exported="true"
-            android:icon="@mipmap/tt_logo"
+            android:icon="@mipmap/logo_tt_new"
             android:label="@string/tt"
             android:targetActivity=".SplashActivity">
             <intent-filter>
@@ -83,7 +83,7 @@
             android:name="com.k7Activity"
             android:enabled="false"
             android:exported="true"
-            android:icon="@mipmap/k7logo"
+            android:icon="@mipmap/logo_k7_new"
             android:label="@string/K7"
             android:targetActivity=".SplashActivity">
             <intent-filter>
@@ -122,7 +122,7 @@
             android:name="com.678yuleActivity"
             android:enabled="false"
             android:exported="true"
-            android:icon="@mipmap/logo_678"
+            android:icon="@mipmap/logo_678_new"
             android:label="@string/yule678"
             android:targetActivity=".SplashActivity">
             <intent-filter>
@@ -135,7 +135,7 @@
             android:name="com.500CPActivity"
             android:enabled="false"
             android:exported="true"
-            android:icon="@mipmap/icon500"
+            android:icon="@mipmap/logo_500_new"
             android:label="@string/cp500"
             android:targetActivity=".SplashActivity">
             <intent-filter>
@@ -148,7 +148,7 @@
             android:name="com.AigoucaiActivity"
             android:enabled="false"
             android:exported="true"
-            android:icon="@mipmap/aigoucai"
+            android:icon="@mipmap/logo_agc_new"
             android:label="@string/aigoucai"
             android:targetActivity=".SplashActivity">
             <intent-filter>
