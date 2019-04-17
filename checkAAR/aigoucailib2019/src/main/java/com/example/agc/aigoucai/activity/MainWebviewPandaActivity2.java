@@ -110,12 +110,11 @@ public class MainWebviewPandaActivity2 extends AppCompatActivity {
         if (null != bundle)
             mUrl = bundle.getString("url");
         mLayout = findViewById(R.id.web_layout);
-        LogUtil.e("======mUrl======"+mUrl);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mWebView = new WebView(this);
         mWebView.setLayoutParams(params);
         mLayout.addView(mWebView);
-        initWebSetting(mUrl);
+        initWebSetting(mUrl+"?access_from=app");
     }
 
 
@@ -240,7 +239,7 @@ public class MainWebviewPandaActivity2 extends AppCompatActivity {
         int id=  view.getId();
         if (id==R.id.ll_home){
             changeSelectState(0);
-            initWebSetting(mUrl);
+            initWebSetting(mUrl+"?access_from=app");
         }else if (id==R.id.ll_betting){
             changeSelectState(1);
             initWebSetting(mUrl+"/fixed.php?cid=129&access_from=app");
