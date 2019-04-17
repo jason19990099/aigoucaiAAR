@@ -242,16 +242,16 @@ public class MainWebviewPandaActivity2 extends AppCompatActivity {
             initWebSetting(mUrl+"?access_from=app");
         }else if (id==R.id.ll_betting){
             changeSelectState(1);
-            initWebSetting(mUrl+"/fixed.php?cid=129&access_from=app");
+            initWebSetting(mUrl+"/fixed.php?cid=129");
         }else if (id==R.id.ll_money){
             changeSelectState(2);
-            initWebSetting(mUrl+"/fixed.php?cid=133&access_from=app");
+            initWebSetting(mUrl+"/fixed.php?cid=133");
         }else if (id==R.id.ll_mine){
             changeSelectState(3);
-            initWebSetting(mUrl+"/fixed.php?cid=132&access_from=app");
+            initWebSetting(mUrl+"/fixed.php?cid=132");
         }else if (id==R.id.ll_more){
             changeSelectState(4);
-            initWebSetting(mUrl+"/fixed.php?cid=131&access_from=app");
+            initWebSetting(mUrl+"/fixed.php?cid=131");
         }
     }
 
