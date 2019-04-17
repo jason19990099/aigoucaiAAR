@@ -11,6 +11,7 @@
 
 
     <application
+        android:hardwareAccelerated="true"
         android:name="com.example.agc.aigoucai.activity.MyApplication"
         android:allowBackup="true"
         android:supportsRtl="true">
