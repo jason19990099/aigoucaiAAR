@@ -99,7 +99,7 @@
 <color name="bg_pressed">#E0E0E0</color>
 <!--标题栏颜色-->
 <color name="color_primary">#2F64D4</color>
-<color name="main_bottom_select">#5B93FA</color>
+<color name="main_bottom_select">#FFD780</color>
 <color name="color_primary_dark">#2753B2</color>
 <color name="color_primary_light">#459DF7</color>
 <color name="lottery_property">@color/text_dark</color>

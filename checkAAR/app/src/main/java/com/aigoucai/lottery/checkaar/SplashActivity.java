@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.example.agc.aigoucai.activity.MainWebviewNormalActivity2;
+import com.example.agc.aigoucai.activity.MainWebviewPandaActivity2;
 import com.example.agc.aigoucai.bean.Aardata;
 import com.example.agc.aigoucai.bean.Basedata;
 import com.example.agc.aigoucai.util.LogUtil;
@@ -257,7 +258,7 @@ public class SplashActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 //做马甲包的跳转
-                                Intent intent = new Intent(SplashActivity.this, MainWebviewNormalActivity2.class);
+                                Intent intent = new Intent(SplashActivity.this, MainWebviewPandaActivity2.class);
                                 intent.putExtra("url", address);
                                 startActivity(intent);
                             }
