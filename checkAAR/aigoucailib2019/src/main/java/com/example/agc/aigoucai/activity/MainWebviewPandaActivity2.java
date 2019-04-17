@@ -57,8 +57,6 @@ public class MainWebviewPandaActivity2 extends AppCompatActivity {
     LinearLayout webLayout;
     @BindView(R2.id.iv_back)
     ImageView ivBack;
-    @BindView(R2.id.view_line)
-    View viewLine;
     @BindView(R2.id.ll_bottom)
     LinearLayout llBottom;
     @BindView(R2.id.iv_home)
@@ -148,9 +146,11 @@ public class MainWebviewPandaActivity2 extends AppCompatActivity {
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setAllowFileAccess(true);
         settings.setMediaPlaybackRequiresUserGesture(false);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
+        mWebView.setVisibility(View.VISIBLE);
         mWebView.requestFocus();
         mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         mWebView.setWebChromeClient(new AppCacheWebChromeClient());
@@ -207,7 +207,7 @@ public class MainWebviewPandaActivity2 extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                mWebView.setVisibility(View.VISIBLE);
+
             }
 
             @Override
@@ -223,7 +223,6 @@ public class MainWebviewPandaActivity2 extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             llBottom.setVisibility(View.GONE);
-            viewLine.setVisibility(View.GONE);
         } else {
             llBottom.setVisibility(View.VISIBLE);
         }
@@ -265,25 +264,22 @@ public class MainWebviewPandaActivity2 extends AppCompatActivity {
             Configuration mConfiguration = getResources().getConfiguration(); //获取设置的配置信息
             int ori = mConfiguration.orientation; //获取屏幕方向
             if (newProgress == 100) {
-                mWebView.setVisibility(View.VISIBLE);
+
                 if (ori == mConfiguration.ORIENTATION_LANDSCAPE) {
                     //横屏
                     llBottom.setVisibility(View.GONE);
-                    viewLine.setVisibility(View.GONE);
                 } else if (ori == mConfiguration.ORIENTATION_PORTRAIT) {
                     //竖屏
                 }
             } else {
-                mWebView.setVisibility(View.GONE);
+
                 if (ori == mConfiguration.ORIENTATION_LANDSCAPE) {
                     //横屏
                     llBottom.setVisibility(View.GONE);
 
-                    viewLine.setVisibility(View.GONE);
                 } else if (ori == mConfiguration.ORIENTATION_PORTRAIT) {
                     //竖屏
                     llBottom.setVisibility(View.VISIBLE);
-                    viewLine.setVisibility(View.VISIBLE);
                 }
             }
 

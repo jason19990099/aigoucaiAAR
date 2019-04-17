@@ -35,12 +35,6 @@
 
     </RelativeLayout>
 
-    <View
-        android:visibility="gone"
-        android:id="@+id/view_line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#efeff4" />
 
     <ImageView
         android:id="@+id/iv_loading"
