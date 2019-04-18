@@ -112,7 +112,7 @@ public class MainWebviewPandaActivity2 extends AppCompatActivity {
         mWebView = new WebView(this);
         mWebView.setLayoutParams(params);
         mLayout.addView(mWebView);
-        initWebSetting(mUrl+"?access_from=app");
+        initWebSetting(mUrl);
     }
 
 
@@ -146,6 +146,9 @@ public class MainWebviewPandaActivity2 extends AppCompatActivity {
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setAllowFileAccess(true);
         settings.setMediaPlaybackRequiresUserGesture(false);
+        String userAgent = settings.getUserAgentString();
+        settings.setUserAgentString(userAgent+"/Client(android-xiaohuangya)");
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
@@ -238,7 +241,7 @@ public class MainWebviewPandaActivity2 extends AppCompatActivity {
         int id=  view.getId();
         if (id==R.id.ll_home){
             changeSelectState(0);
-            initWebSetting(mUrl+"?access_from=app");
+            initWebSetting(mUrl);
         }else if (id==R.id.ll_betting){
             changeSelectState(1);
             initWebSetting(mUrl+"/fixed.php?cid=129");
