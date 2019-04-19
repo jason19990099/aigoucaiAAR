@@ -70,7 +70,7 @@
             android:name="com.pandaActivity"
             android:enabled="false"
             android:exported="true"
-            android:icon="@mipmap/panda"
+            android:icon="@mipmap/logo_panda_net"
             android:label="@string/panda"
             android:targetActivity=".SplashActivity">
             <intent-filter>

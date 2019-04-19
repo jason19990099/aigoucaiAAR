@@ -98,7 +98,7 @@ public class SelectServiceActivity extends Activity {
             ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_8hao));
         }
         if (getintent.contains("com.pandaActivity")) {
-            ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_panda));
+            ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.wel));
         }
 
         tvVertion.setText("版本号:" + Apputil.getVersion(SelectServiceActivity.this));

@@ -148,7 +148,7 @@ public class SelectLinesActivity extends Activity implements SwipeRefreshLayout.
             ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_8hao));
         }
         if(getintent.contains("com.pandaActivity")){
-            ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_panda));
+            ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.wel));
         }
 
 
