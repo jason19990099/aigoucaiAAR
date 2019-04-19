@@ -32,7 +32,7 @@
 
             <TextView
                 android:id="@+id/tv_home"
-                style="@style/main_button_text"
+                style="@style/main_button_text2"
                 android:duplicateParentState="true"
                 android:focusableInTouchMode="false"
                 android:text="首页"/>
@@ -60,7 +60,7 @@
 
             <TextView
                 android:id="@+id/tv_betting"
-                style="@style/main_button_text"
+                style="@style/main_button_text2"
                 android:duplicateParentState="true"
                 android:focusableInTouchMode="false"
                 android:text="自拍"/>
@@ -87,7 +87,7 @@
 
             <TextView
                 android:id="@+id/tv_money"
-                style="@style/main_button_text"
+                style="@style/main_button_text2"
                 android:duplicateParentState="true"
                 android:focusableInTouchMode="false"
                 android:text="辣妹大奶"/>
@@ -114,7 +114,7 @@
 
             <TextView
                 android:id="@+id/tv_mine"
-                style="@style/main_button_text"
+                style="@style/main_button_text2"
                 android:duplicateParentState="true"
                 android:focusableInTouchMode="false"
                 android:text="各行各业"/>
@@ -142,7 +142,7 @@
 
             <TextView
                 android:id="@+id/tv_more"
-                style="@style/main_button_text"
+                style="@style/main_button_text2"
                 android:duplicateParentState="true"
                 android:focusableInTouchMode="false"
                 android:text="重口变态"/>
