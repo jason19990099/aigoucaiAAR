@@ -39,8 +39,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.agc.aigoucai.R;
 import com.example.agc.aigoucai.R2;
-import com.example.agc.aigoucai.util.LogUtil;
-
 import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -241,19 +239,19 @@ public class MainWebviewPandaActivity2 extends AppCompatActivity {
         int id=  view.getId();
         if (id==R.id.ll_home){
             changeSelectState(0);
-            initWebSetting(mUrl);
+            mWebView.loadUrl(mUrl);
         }else if (id==R.id.ll_betting){
             changeSelectState(1);
-            initWebSetting(mUrl+"/fixed.php?cid=129");
+            mWebView.loadUrl(mUrl+"/fixed.php?cid=129");
         }else if (id==R.id.ll_money){
             changeSelectState(2);
-            initWebSetting(mUrl+"/fixed.php?cid=133");
+            mWebView.loadUrl(mUrl+"/fixed.php?cid=133");
         }else if (id==R.id.ll_mine){
             changeSelectState(3);
-            initWebSetting(mUrl+"/fixed.php?cid=132");
+            mWebView.loadUrl(mUrl+"/fixed.php?cid=132");
         }else if (id==R.id.ll_more){
             changeSelectState(4);
-            initWebSetting(mUrl+"/fixed.php?cid=131");
+            mWebView.loadUrl(mUrl+"/fixed.php?cid=131");
         }
     }
 

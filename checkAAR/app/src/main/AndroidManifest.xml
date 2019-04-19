@@ -3,7 +3,7 @@
     package="com.aigoucai.lottery.checkaar">
 
     <application
-        android:icon="@mipmap/xiaohuangya"
+        android:icon="@mipmap/logo_xhy"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">

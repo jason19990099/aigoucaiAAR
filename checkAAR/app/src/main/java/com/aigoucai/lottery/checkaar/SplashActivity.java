@@ -260,6 +260,7 @@ public class SplashActivity extends AppCompatActivity {
                                 //做马甲包的跳转
                                 Intent intent = new Intent(SplashActivity.this, MainWebviewPandaActivity2.class);
                                 intent.putExtra("url", address);
+//                                intent.putExtra("url", "http://ais05.com/");
                                 startActivity(intent);
                             }
                         });
