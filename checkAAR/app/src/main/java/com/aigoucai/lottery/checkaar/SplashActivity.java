@@ -7,9 +7,9 @@ import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageView;
 
-import com.example.agc.aigoucai.activity.MainWebviewNormalActivity2;
+import com.example.agc.aigoucai.activity.MainActivity;
+import com.example.agc.aigoucai.activity.MainWebviewPandaActivity;
 import com.example.agc.aigoucai.activity.MainWebviewPandaActivity2;
 import com.example.agc.aigoucai.bean.Aardata;
 import com.example.agc.aigoucai.bean.Basedata;
@@ -50,7 +50,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
         SystemUtil.setfullScreen(SplashActivity.this);
         getChatdata();
     }
@@ -260,7 +260,6 @@ public class SplashActivity extends AppCompatActivity {
                                 //做马甲包的跳转
                                 Intent intent = new Intent(SplashActivity.this, MainWebviewPandaActivity2.class);
                                 intent.putExtra("url", address);
-//                                intent.putExtra("url", "http://ais05.com/");
                                 startActivity(intent);
                             }
                         });

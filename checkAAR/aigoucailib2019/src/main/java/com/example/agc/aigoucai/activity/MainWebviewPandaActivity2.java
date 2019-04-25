@@ -547,7 +547,7 @@ public class MainWebviewPandaActivity2 extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        finish();
+
     }
 
     public void ClearCookie() {
