@@ -36,14 +36,11 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.example.agc.aigoucai.R;
 import com.example.agc.aigoucai.R2;
@@ -59,7 +56,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -67,47 +63,33 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class MainWebviewPandaActivity2 extends AppCompatActivity {
-    @BindView(R2.id.ll_home)
-    LinearLayout llHome;
-    @BindView(R2.id.web_layout)
-    LinearLayout webLayout;
+public class MainWebviewPandaActivity3 extends AppCompatActivity {
     @BindView(R2.id.iv_back)
     ImageView ivBack;
-    @BindView(R2.id.ll_bottom)
-    LinearLayout llBottom;
-    @BindView(R2.id.iv_home)
-    ImageView ivHome;
-    @BindView(R2.id.tv_home)
-    TextView tvHome;
-    @BindView(R2.id.iv_betting)
-    ImageView ivBetting;
-    @BindView(R2.id.tv_betting)
-    TextView tvBetting;
-    @BindView(R2.id.ll_betting)
-    LinearLayout llBetting;
-    @BindView(R2.id.iv_money)
-    ImageView ivMoney;
-    @BindView(R2.id.tv_money)
-    TextView tvMoney;
-    @BindView(R2.id.ll_money)
-    LinearLayout llMoney;
-    @BindView(R2.id.iv_mine)
-    ImageView ivMine;
-    @BindView(R2.id.tv_mine)
-    TextView tvMine;
-    @BindView(R2.id.ll_mine)
-    LinearLayout llMine;
-    @BindView(R2.id.iv_more)
-    ImageView ivMore;
-    @BindView(R2.id.tv_more)
-    TextView tvMore;
-    @BindView(R2.id.ll_more)
-    LinearLayout llMore;
+    @BindView(R2.id.ll_title)
+    RelativeLayout llTitle;
+    @BindView(R2.id.iv_loading)
+    ImageView ivLoading;
+    @BindView(R2.id.web_layout)
+    LinearLayout webLayout;
+    @BindView(R2.id.tab_1)
+    RadioButton tab1;
+    @BindView(R2.id.tab_2)
+    RadioButton tab2;
+    @BindView(R2.id.tab_3)
+    RadioButton tab3;
+    @BindView(R2.id.tab_4)
+    RadioButton tab4;
+    @BindView(R2.id.tab_5)
+    RadioButton tab5;
+    @BindView(R2.id.rg)
+    RadioGroup rg;
+    @BindView(R2.id.activity_main)
+    LinearLayout activityMain;
     private String mUrl;
     private LinearLayout mLayout;
     private WebView mWebView;
-    private View[] mviews;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,37 +97,88 @@ public class MainWebviewPandaActivity2 extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
         //解決挼鍵盤把輸入框遮擋的問題
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        setContentView(R.layout.activity_web2);
+        setContentView(R.layout.activity_web3);
         ButterKnife.bind(this);
-
-        mviews = new View[]{llHome, llBetting, llMoney, llMine, llMore};
-        changeSelectState(0);
-
         Bundle bundle = this.getIntent().getExtras();
         if (null != bundle)
             mUrl = bundle.getString("url");
-
-
         mLayout = findViewById(R.id.web_layout);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mWebView = new WebView(this);
         mWebView.setLayoutParams(params);
         mLayout.addView(mWebView);
         initWebSetting(mUrl);
+
+        getBottomData();
+
     }
 
 
+    private void getBottomData() {
+        final String url = "http://xhy166.com/Api/footer_link.php";
+        OkHttpClient okHttpClient = new OkHttpClient();
+        final Request request = new Request.Builder()
+                .url(url)
+                .get()//默认就是GET请求，可以不写
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("123", "onFailure: ");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String data = response.body().string();
+                final BottomBean bottomBean = new Gson().fromJson(data, BottomBean.class);
+
+                rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        if (checkedId==R.id.tab_1){
+                            mWebView.loadUrl(mUrl+bottomBean.getDate().get(0).getUrl());
+                        }else if (checkedId==R.id.tab_2){
+                            mWebView.loadUrl(mUrl+bottomBean.getDate().get(1).getUrl());
+                        }else if (checkedId==R.id.tab_3){
+                            mWebView.loadUrl(mUrl+bottomBean.getDate().get(2).getUrl());
+                        }else if (checkedId==R.id.tab_4){
+                            mWebView.loadUrl(mUrl+bottomBean.getDate().get(3).getUrl());
+                        }else if (checkedId==R.id.tab_5){
+                            mWebView.loadUrl(mUrl+bottomBean.getDate().get(4).getUrl());
+                        }
+
+
+                    }
+                });
+                final Drawable normal1 = CommonUtils.loadImageFromNetwork(mUrl + bottomBean.getDate().get(0).getIcon_hide());     //被按压时显示的图片
+                final Drawable pressed1 = CommonUtils.loadImageFromNetwork(mUrl + bottomBean.getDate().get(0).getIcon_show());    //正常状态默认的图
+                final Drawable normal2 = CommonUtils.loadImageFromNetwork(mUrl + bottomBean.getDate().get(1).getIcon_hide());     //被按压时显示的图片
+                final Drawable pressed2 = CommonUtils.loadImageFromNetwork(mUrl + bottomBean.getDate().get(1).getIcon_show());    //正常状态默认的图
+                final Drawable normal3 = CommonUtils.loadImageFromNetwork(mUrl + bottomBean.getDate().get(2).getIcon_hide());     //被按压时显示的图片
+                final Drawable pressed3 = CommonUtils.loadImageFromNetwork(mUrl + bottomBean.getDate().get(2).getIcon_show());    //正常状态默认的图
+                final Drawable normal4 = CommonUtils.loadImageFromNetwork(mUrl + bottomBean.getDate().get(3).getIcon_hide());     //被按压时显示的图片
+                final Drawable pressed4 = CommonUtils.loadImageFromNetwork(mUrl + bottomBean.getDate().get(3).getIcon_show());    //正常状态默认的图
+                final Drawable normal5 = CommonUtils.loadImageFromNetwork(mUrl + bottomBean.getDate().get(4).getIcon_hide());     //被按压时显示的图片
+                final Drawable pressed5 = CommonUtils.loadImageFromNetwork(mUrl + bottomBean.getDate().get(4).getIcon_show());    //正常状态默认的图
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tab1.setChecked(true);
+                        CommonUtils.setSelectorDrawable(tab1, normal1, pressed1,bottomBean.getDate().get(0).getName());
+                        CommonUtils.setSelectorDrawable(tab2, normal2, pressed2,bottomBean.getDate().get(1).getName());
+                        CommonUtils.setSelectorDrawable(tab3, normal3, pressed3,bottomBean.getDate().get(2).getName());
+                        CommonUtils.setSelectorDrawable(tab4, normal4, pressed4,bottomBean.getDate().get(3).getName());
+                        CommonUtils.setSelectorDrawable(tab5, normal5, pressed5,bottomBean.getDate().get(4).getName());
+                    }
+                });
+            }
+        });
 
 
 
-    /**
-     * 切換底部按鈕顏色
-     */
-    private void changeSelectState(int index) {
-        for (int i = 0; i < mviews.length; i++) {
-            mviews[i].setSelected(index == i);
-        }
     }
+
 
     /**
      * 初始化webview
@@ -243,42 +276,12 @@ public class MainWebviewPandaActivity2 extends AppCompatActivity {
         mWebView.loadUrl(url);
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            llBottom.setVisibility(View.GONE);
-        } else {
-            llBottom.setVisibility(View.VISIBLE);
-        }
-    }
-
 
     private ValueCallback<Uri[]> mUploadCallbackAboveL;
     private final static int FILECHOOSER_RESULTCODE = 1;// 表单的结果回调</span>
     private ValueCallback<Uri> mUploadMessage;// 表单的数据信息
 
-    @OnClick({R2.id.ll_home, R2.id.iv_back, R2.id.ll_money, R2.id.ll_mine, R2.id.ll_betting, R2.id.ll_more})
-    public void onViewClicked(View view) {
-        int id = view.getId();
-        if (id == R.id.ll_home) {
-            changeSelectState(0);
-            mWebView.loadUrl(mUrl);
-        } else if (id == R.id.ll_betting) {
-            changeSelectState(1);
-            mWebView.loadUrl(mUrl + "/fixed.php?cid=129");
-        } else if (id == R.id.ll_money) {
-            changeSelectState(2);
-            mWebView.loadUrl(mUrl + "/fixed.php?cid=133");
-        } else if (id == R.id.ll_mine) {
-            changeSelectState(3);
-            mWebView.loadUrl(mUrl + "/fixed.php?cid=132");
-        } else if (id == R.id.ll_more) {
-            changeSelectState(4);
-            mWebView.loadUrl(mUrl+"/fixed.php?cid=131");
 
-        }
-    }
 
 
     private class AppCacheWebChromeClient extends WebChromeClient {
@@ -286,18 +289,6 @@ public class MainWebviewPandaActivity2 extends AppCompatActivity {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
-            Configuration mConfiguration = getResources().getConfiguration(); //获取设置的配置信息
-            int ori = mConfiguration.orientation; //获取屏幕方向
-            if (ori == mConfiguration.ORIENTATION_LANDSCAPE) {
-                //横屏
-                llBottom.setVisibility(View.GONE);
-
-            } else if (ori == mConfiguration.ORIENTATION_PORTRAIT) {
-                //竖屏
-                llBottom.setVisibility(View.VISIBLE);
-            }
-
-
         }
 
         @Override
