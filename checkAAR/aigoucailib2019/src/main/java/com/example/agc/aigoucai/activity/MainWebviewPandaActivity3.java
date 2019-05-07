@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
@@ -36,6 +37,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -86,9 +88,12 @@ public class MainWebviewPandaActivity3 extends AppCompatActivity {
     RadioGroup rg;
     @BindView(R2.id.activity_main)
     LinearLayout activityMain;
+    @BindView(R2.id.fl_video)    // 用来显示视频的布局
+    FrameLayout flVideo;
     private String mUrl;
     private LinearLayout mLayout;
     private WebView mWebView;
+
 
 
     @Override
@@ -136,16 +141,16 @@ public class MainWebviewPandaActivity3 extends AppCompatActivity {
                 rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        if (checkedId==R.id.tab_1){
-                            mWebView.loadUrl(mUrl+bottomBean.getDate().get(0).getUrl());
-                        }else if (checkedId==R.id.tab_2){
-                            mWebView.loadUrl(mUrl+bottomBean.getDate().get(1).getUrl());
-                        }else if (checkedId==R.id.tab_3){
-                            mWebView.loadUrl(mUrl+bottomBean.getDate().get(2).getUrl());
-                        }else if (checkedId==R.id.tab_4){
-                            mWebView.loadUrl(mUrl+bottomBean.getDate().get(3).getUrl());
-                        }else if (checkedId==R.id.tab_5){
-                            mWebView.loadUrl(mUrl+bottomBean.getDate().get(4).getUrl());
+                        if (checkedId == R.id.tab_1) {
+                            mWebView.loadUrl(mUrl + bottomBean.getDate().get(0).getUrl());
+                        } else if (checkedId == R.id.tab_2) {
+                            mWebView.loadUrl(mUrl + bottomBean.getDate().get(1).getUrl());
+                        } else if (checkedId == R.id.tab_3) {
+                            mWebView.loadUrl(mUrl + bottomBean.getDate().get(2).getUrl());
+                        } else if (checkedId == R.id.tab_4) {
+                            mWebView.loadUrl(mUrl + bottomBean.getDate().get(3).getUrl());
+                        } else if (checkedId == R.id.tab_5) {
+                            mWebView.loadUrl(mUrl + bottomBean.getDate().get(4).getUrl());
                         }
 
 
@@ -165,16 +170,15 @@ public class MainWebviewPandaActivity3 extends AppCompatActivity {
                     @Override
                     public void run() {
                         tab1.setChecked(true);
-                        CommonUtils.setSelectorDrawable(tab1, normal1, pressed1,bottomBean.getDate().get(0).getName());
-                        CommonUtils.setSelectorDrawable(tab2, normal2, pressed2,bottomBean.getDate().get(1).getName());
-                        CommonUtils.setSelectorDrawable(tab3, normal3, pressed3,bottomBean.getDate().get(2).getName());
-                        CommonUtils.setSelectorDrawable(tab4, normal4, pressed4,bottomBean.getDate().get(3).getName());
-                        CommonUtils.setSelectorDrawable(tab5, normal5, pressed5,bottomBean.getDate().get(4).getName());
+                        CommonUtils.setSelectorDrawable(tab1, normal1, pressed1, bottomBean.getDate().get(0).getName());
+                        CommonUtils.setSelectorDrawable(tab2, normal2, pressed2, bottomBean.getDate().get(1).getName());
+                        CommonUtils.setSelectorDrawable(tab3, normal3, pressed3, bottomBean.getDate().get(2).getName());
+                        CommonUtils.setSelectorDrawable(tab4, normal4, pressed4, bottomBean.getDate().get(3).getName());
+                        CommonUtils.setSelectorDrawable(tab5, normal5, pressed5, bottomBean.getDate().get(4).getName());
                     }
                 });
             }
         });
-
 
 
     }
@@ -202,6 +206,9 @@ public class MainWebviewPandaActivity3 extends AppCompatActivity {
         settings.setAllowFileAccess(true);
         settings.setMediaPlaybackRequiresUserGesture(false);
         String userAgent = settings.getUserAgentString();
+
+        mWebView.setFocusable(false); // 去掉超链接的外边框
+        mWebView.getSettings().setDefaultTextEncodingName("utf-8");//设置文本编码（根据页面要求设置： utf-8）
         settings.setUserAgentString(userAgent + "/Client(android-xiaohuangya)");
 
 
@@ -282,9 +289,10 @@ public class MainWebviewPandaActivity3 extends AppCompatActivity {
     private ValueCallback<Uri> mUploadMessage;// 表单的数据信息
 
 
-
-
     private class AppCacheWebChromeClient extends WebChromeClient {
+        private CustomViewCallback mCustomViewCallback;
+        //  横屏时，显示视频的view
+        private View mCustomView;
 
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
@@ -296,6 +304,30 @@ public class MainWebviewPandaActivity3 extends AppCompatActivity {
             super.onReceivedTitle(view, title);
         }
 
+
+        // 点击全屏按钮时，调用的方法
+        @Override
+        public void onShowCustomView(View view, CustomViewCallback callback) {
+            super.onShowCustomView(view, callback);
+
+            //如果view 已经存在，则隐藏
+            if (mCustomView != null) {
+                callback.onCustomViewHidden();
+                return;
+            }
+
+            mCustomView = view;
+            mCustomView.setVisibility(View.VISIBLE);
+            mCustomViewCallback = callback;
+            flVideo.addView(mCustomView);
+            flVideo.setVisibility(View.VISIBLE);
+            flVideo.bringToFront();
+
+            //设置横屏
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+
+        //全屏时间调用
         @Override
         public boolean onShowFileChooser(WebView webView,
                                          ValueCallback<Uri[]> filePathCallback,
@@ -305,7 +337,43 @@ public class MainWebviewPandaActivity3 extends AppCompatActivity {
             return true;
         }
 
+        // 切换为竖屏的时候调用
+        @Override
+        public void onHideCustomView() {
+            super.onHideCustomView();
+            if (mCustomView == null) {
+                return;
+            }
+            mCustomView.setVisibility(View.GONE);
+            flVideo.removeView(mCustomView);
+            mCustomView = null;
+            flVideo.setVisibility(View.GONE);
+            try {
+                mCustomViewCallback.onCustomViewHidden();
+            } catch (Exception e) {
+            }
+
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//竖屏
+        }
+
+
     }
+
+    @Override
+    public void onConfigurationChanged(Configuration config) {
+        super.onConfigurationChanged(config);
+        switch (config.orientation) {
+            case Configuration.ORIENTATION_LANDSCAPE:
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                break;
+            case Configuration.ORIENTATION_PORTRAIT:
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+                break;
+        }
+    }
+
 
     private Uri imageUri;
 
@@ -550,6 +618,7 @@ public class MainWebviewPandaActivity3 extends AppCompatActivity {
         super.onStop();
 
     }
+
 
     public void ClearCookie() {
         CookieSyncManager.createInstance(this);  //Create a singleton CookieSyncManager within a context
