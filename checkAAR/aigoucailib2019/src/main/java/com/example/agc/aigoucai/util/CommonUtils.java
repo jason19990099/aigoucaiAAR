@@ -67,7 +67,7 @@ public class CommonUtils {
                  drawable.addState(new int[]{android.R.attr.state_checked},drawableSelect);
                  //未选中
                  drawable.addState(new int[]{-android.R.attr.state_checked},drawableNormal);
-                 drawable.setBounds(0, 0, 80, 80);
+                 drawable.setBounds(0, 0, 60, 60);
                  cbButton.setCompoundDrawables(null, drawable, null, null);
                  cbButton.setText(text);
     }
