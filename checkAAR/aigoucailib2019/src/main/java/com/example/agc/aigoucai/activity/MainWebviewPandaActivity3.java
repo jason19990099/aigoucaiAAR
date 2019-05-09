@@ -48,6 +48,7 @@ import com.example.agc.aigoucai.R;
 import com.example.agc.aigoucai.R2;
 import com.example.agc.aigoucai.bean.BottomBean;
 import com.example.agc.aigoucai.util.CommonUtils;
+import com.example.agc.aigoucai.util.LogUtil;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -137,7 +138,7 @@ public class MainWebviewPandaActivity3 extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 final String data = response.body().string();
                 final BottomBean bottomBean = new Gson().fromJson(data, BottomBean.class);
-
+                LogUtil.e("===========onResponse==========");
                 rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -364,10 +365,12 @@ public class MainWebviewPandaActivity3 extends AppCompatActivity {
         super.onConfigurationChanged(config);
         switch (config.orientation) {
             case Configuration.ORIENTATION_LANDSCAPE:
+                activityMain.setVisibility(View.GONE);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 break;
             case Configuration.ORIENTATION_PORTRAIT:
+                activityMain.setVisibility(View.VISIBLE);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
                 break;

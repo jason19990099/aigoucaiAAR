@@ -43,9 +43,11 @@
         android:background="@mipmap/loading"
         android:visibility="gone" />
 
-    <LinearLayout  android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_weight="99"
+        android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
     <FrameLayout
         android:visibility="gone"
         android:id="@+id/fl_video"
@@ -57,8 +59,7 @@
         android:background="#2A2929"
         android:id="@+id/web_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:visibility="visible" />
 
@@ -66,7 +67,9 @@
 
 
 
-    <include layout="@layout/main_bottom3" />
+    <include
+
+        layout="@layout/main_bottom3" />
 
 
 </LinearLayout>
