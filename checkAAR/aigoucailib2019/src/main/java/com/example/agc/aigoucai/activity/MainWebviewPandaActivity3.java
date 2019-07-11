@@ -138,20 +138,44 @@ public class MainWebviewPandaActivity3 extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 final String data = response.body().string();
                 final BottomBean bottomBean = new Gson().fromJson(data, BottomBean.class);
-                LogUtil.e("===========onResponse==========");
+                LogUtil.e("===========onResponse=========="+data);
                 rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
                         if (checkedId == R.id.tab_1) {
-                            mWebView.loadUrl(mUrl + bottomBean.getDate().get(0).getUrl());
+                            if (bottomBean.getDate().get(0).isHas_site()){
+                                mWebView.loadUrl(mUrl + bottomBean.getDate().get(0).getUrl());
+                            }else{
+                                mWebView.loadUrl(mUrl);
+                            }
+
                         } else if (checkedId == R.id.tab_2) {
-                            mWebView.loadUrl(mUrl + bottomBean.getDate().get(1).getUrl());
+                            if (bottomBean.getDate().get(1).isHas_site()){
+                                mWebView.loadUrl(mUrl + bottomBean.getDate().get(1).getUrl());
+                            }else{
+                                mWebView.loadUrl(mUrl);
+                            }
+
                         } else if (checkedId == R.id.tab_3) {
-                            mWebView.loadUrl(mUrl + bottomBean.getDate().get(2).getUrl());
+                            if (bottomBean.getDate().get(2).isHas_site()){
+                                mWebView.loadUrl(mUrl + bottomBean.getDate().get(2).getUrl());
+                            }else{
+                                mWebView.loadUrl(mUrl);
+                            }
+
                         } else if (checkedId == R.id.tab_4) {
-                            mWebView.loadUrl(mUrl + bottomBean.getDate().get(3).getUrl());
+                            if (bottomBean.getDate().get(3).isHas_site()){
+                                mWebView.loadUrl(mUrl + bottomBean.getDate().get(3).getUrl());
+                            }else{
+                                mWebView.loadUrl(bottomBean.getDate().get(3).getUrl());
+                            }
+
                         } else if (checkedId == R.id.tab_5) {
-                            mWebView.loadUrl(mUrl + bottomBean.getDate().get(4).getUrl());
+                            if (bottomBean.getDate().get(4).isHas_site()){
+                                mWebView.loadUrl(mUrl + bottomBean.getDate().get(4).getUrl());
+                            }else{
+                                mWebView.loadUrl(mUrl);
+                            }
                         }
 
 
@@ -352,6 +376,7 @@ public class MainWebviewPandaActivity3 extends AppCompatActivity {
             try {
                 mCustomViewCallback.onCustomViewHidden();
             } catch (Exception e) {
+                e.printStackTrace();
             }
 
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//竖屏

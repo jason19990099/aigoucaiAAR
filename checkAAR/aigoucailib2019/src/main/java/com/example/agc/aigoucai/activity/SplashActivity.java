@@ -30,7 +30,7 @@ public class SplashActivity extends AppCompatActivity {
         ivWelcome=findViewById(R.id.iv_welcome);
 
         String  getintent=SharePreferencesUtil.getString(SplashActivity.this,"getIntent","");
-        if(getintent.contains("com.500CPActivity")){
+        if(getintent.contains("com.CP500Activity")){
             ivWelcome.setImageDrawable(getResources().getDrawable(R.mipmap.welcome_500));
             Basedata.share_url="https://www.500app.me/app.html";
         }
@@ -46,7 +46,7 @@ public class SplashActivity extends AppCompatActivity {
             ivWelcome.setImageDrawable(getResources().getDrawable(R.mipmap.welcome_tt));
             Basedata.share_url="https://www.ttapp.me/app.html";
         }
-        if(getintent.contains("com.678yuleActivity")){
+        if(getintent.contains("com.yule678Activity")){
             ivWelcome.setImageDrawable(getResources().getDrawable(R.mipmap.welcome_678));
             Basedata.share_url="https://www.appkings.me/678.html";
         }
@@ -66,7 +66,7 @@ public class SplashActivity extends AppCompatActivity {
             ivWelcome.setImageDrawable(getResources().getDrawable(R.mipmap.welcome_zxc));
             Basedata.share_url="https://www.appkings.me/zxc.html";
         }
-        if(getintent.contains("com.8HaoActivity")){
+        if(getintent.contains("com.Hao8Activity")){
             ivWelcome.setImageDrawable(getResources().getDrawable(R.mipmap.welcome_8hao));
             Basedata.share_url="https://www.appkings.me/8hao.html";
         }

@@ -67,7 +67,7 @@ public class SelectServiceActivity extends Activity {
         SystemUtil.setfullScreen(SelectServiceActivity.this);
 
         String getintent = SharePreferencesUtil.getString(SelectServiceActivity.this, "getIntent", "");
-        if (getintent.contains("com.500CPActivity")) {
+        if (getintent.contains("com.CP500Activity")) {
             ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.backgroud_500cp));
         }
         if (getintent.contains("com.AigoucaiActivity")) {
@@ -79,7 +79,7 @@ public class SelectServiceActivity extends Activity {
         if (getintent.contains("com.ttActivity")) {
             ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_tt));
         }
-        if (getintent.contains("com.678yuleActivity")) {
+        if (getintent.contains("com.yule678Activity")) {
             ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_678));
         }
         if (getintent.contains("com.xpjActivity")) {
@@ -94,7 +94,7 @@ public class SelectServiceActivity extends Activity {
         if (getintent.contains("com.zxcActivity")) {
             ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_axc));
         }
-        if (getintent.contains("com.8HaoActivity")) {
+        if (getintent.contains("com.Hao8Activity")) {
             ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.background_8hao));
         }
         if (getintent.contains("com.pandaActivity")) {
